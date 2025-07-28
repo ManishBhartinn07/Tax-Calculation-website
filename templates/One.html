@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            transition: background 0.5s, color 0.5s;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: white;
+            transition: background 0.5s;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 100%;
+            padding-left: 35px;
+        }
+        .input-container i {
+            position: absolute;
+            left: 15px;
+            color: gray;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .show-result {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .dark-mode {
+            background: #222;
+            color: white;
+        }
+        .dark-mode .container {
+            background: #333;
+        }
+        .toggle-switch {
+            cursor: pointer;
+            margin-top: 20px;
+            padding: 10px;
+            background: #111;
+            color: white;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Income Tax Calculator</h1>
+        <div class="toggle-switch" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</div>
+        <form method="POST" onsubmit="showResult()">
+            <div class="input-container">
+                <i class="fas fa-rupee-sign"></i>
+                <input type="number" name="income" placeholder="Enter your income" required>
+            </div>
+            <button type="submit">Calculate Tax</button>
+        </form>
+
+        {% if tax is not none %}
+        <div class="result show-result" id="result">
+            <p><strong>Income:</strong> Rs {{ income }}</p>
+            <p><strong>Standard Exemption:</strong> Rs 75,000</p>
+            <p><strong>Taxable Income:</strong> Rs 
+                {% if (income - 75000) > 0 %}
+                    {{ "%.2f"|format(income - 75000) }}
+                {% else %}
+                    0.00
+                {% endif %}
+            </p>
+            <p><strong>Tax Payable:</strong> Rs {{ "%.2f"|format(tax) }}</p>
+            <p><strong>Effective Tax Rate:</strong> {{ "%.2f"|format((tax / income * 100) if income > 0 else 0) }}%</p>
+        </div>
+        {% endif %}        
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        function showResult() {
+            setTimeout(() => {
+                document.getElementById("result").classList.add("show-result");
+            }, 100);
+        }
+    </script>
+</body>
+</html>
