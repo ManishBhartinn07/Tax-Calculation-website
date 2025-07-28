@@ -1,5 +1,5 @@
-Flask==2.x.x
-gunicorn==20.x.x
+Flask>=3.0.3
+gunicorn>=20.1.0
 absl-py==2.1.0
 aext-assistant @ file:///C:/b/abs_7e0qjcige6/croot/aext-assistant_1717062202219/work
 aext-assistant-server @ file:///C:/b/abs_261y2c9vsm/croot/aext-assistant-server_1717060019302/work
