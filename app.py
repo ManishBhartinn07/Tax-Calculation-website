@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from Tax import calculate_tax  # Import tax calculation function
+import os
 
 app = Flask(__name__)
 
@@ -21,4 +22,5 @@ def index():
     return render_template("One.html", tax=tax, effective_tax_rate=effective_tax_rate, income=income)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host="0.0.0.0", port=port)
